@@ -5,8 +5,11 @@
   "author": "WaK",
   "license": "MIT",
   "dependencies": {
+    "knex": "^0.21.5",
     "koa": "^2.13.0",
-    "koa-router": "^9.4.0"
+    "koa-router": "^9.4.0",
+    "lodash": "^4.17.20",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {},
   "scripts": {
