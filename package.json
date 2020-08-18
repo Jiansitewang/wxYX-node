@@ -1,0 +1,16 @@
+{
+  "name": "wxyx-node",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "WaK",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": ""
+}
