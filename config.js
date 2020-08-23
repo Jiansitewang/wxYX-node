@@ -1,5 +1,5 @@
 const CONFIG ={
-  port: '5757',
+  port: '5656',
   mysql:{
     host: 'localhost',
     port: 3306,
