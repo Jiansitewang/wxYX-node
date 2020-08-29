@@ -21,7 +21,6 @@ async function indexAction(ctx){
 //添加搜索历史记录
 async function addHistoryAction(ctx){
   const {openId,keyword} = ctx.request.body
-  console.log(openId,keyword)
   //查找数据库内是否有正在搜索的这个数据
   const oldData = await mysql('nideshop_search_history').where({
     'user_id': openId,
@@ -49,9 +48,55 @@ async function addHistoryAction(ctx){
     }
   }
 }
+//清除历史记录
+async function clearHistoryAction(ctx){
+  const openId = ctx.request.body.openId
+  const data = await mysql('nideshop_search_history').where({
+    'user_id': openId
+  }).del()
+  if (data){
+    ctx.body={
+      'data': '清除成功'
+    }
+  }else {
+    ctx.body = {
+      'data': null
+    }
+  }
+}
+//搜索匹配
+async function showTips(ctx){
+  const keyword = ctx.query.keyword
+  let order = ctx.query.order
+  if (!order){
+    order = ''
+    orderBy = 'id'
+  }else {
+    orderBy = 'retail_price'
+  }
+  const keywords = await mysql('nideshop_goods')
+    .orderBy(orderBy,order)
+    .column('id','name','list_pic_url','retail_price')
+    .where('name','like','%' + keyword + '%')
+    .limit(10)
+    .select()
+  if (keywords){
+    ctx.body= {
+      keywords
+    }
+  }else {
+    ctx.body= {
+      keywords: []
+    }
+  }
+  console.log(keyword)
+}
+
 
 
 module.exports = {
   indexAction,
-  addHistoryAction
+  addHistoryAction,
+  clearHistoryAction,
+  showTips
 }
