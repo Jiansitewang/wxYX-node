@@ -12,10 +12,14 @@ async function goodsDetail(ctx){
   const gallery = await mysql('nideshop_goods_gallery').where({
     'goods_id': goodsId
   })
-
+  //商品参数
+  const attribute = await mysql('nideshop_goods_attribute').column('nideshop_goods_attribute.value','nideshop_attribute.name').leftJoin('nideshop_attribute','nideshop_goods_attribute.attribute_id','nideshop_attribute.id').where({
+    'nideshop_goods_attribute.goods_id': goodsId
+  }).select()
   ctx.body = {
-    'info': info,
-    'gallery': gallery
+    'info': info[0] || [],
+    'gallery': gallery,
+    'attribute' : attribute
   }
 }
 
