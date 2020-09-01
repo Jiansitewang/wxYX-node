@@ -13,4 +13,10 @@ router.post('/search/clearHistoryAction',controllers.search.search.clearHistoryA
 //商品详情相关
 router.get('/goods/goodsDetail',controllers.goods.goods.goodsDetail)
 
+//收藏相关
+router.post('/collect/addCollect',controllers.collect.collect.addCollect)
+
+//订单相关
+router.post('/order/submitAction',controllers.order.order.submitAction)
+
 module.exports = router
