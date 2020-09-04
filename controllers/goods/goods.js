@@ -53,7 +53,36 @@ async function goodsDetail(ctx){
     'allNumber': allNumber
   }
 }
+//首页分类导航
+async function navGoodsData(ctx){
+  const navId = ctx.query.navId
+  let navGoods = []
+  if (navId){
+    navGoods = await mysql('nideshop_goods').where({
+      'category_id': navId
+    }).select()
+    const currentNav = await mysql('nideshop_category').where({
+      'id': navId
+    }).select()
+    if (navGoods.length === 0){
+      let subIds = await mysql('nideshop_category').where({
+        'parent_id': navId
+      }).column('id').select()
+      if (subIds.length !== 0){
+        subIds = subIds.map((item) => {
+          return item.id
+        })
+      }
+      navGoods = await mysql('nideshop_goods').whereIn('category_id',subIds).limit(50).select()
+    }
+    ctx.body = {
+      data: navGoods,
+      currentNav: currentNav[0]
+    }
+  }
+}
 
 module.exports = {
-  goodsDetail
+  goodsDetail,
+  navGoodsData
 }
